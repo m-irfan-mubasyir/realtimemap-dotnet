@@ -31,9 +31,9 @@ try
     // add map grid for Helsinki region
     builder.Services.AddSingleton(_ => new MapGrid(0.2, 60.0, 24.4, 60.6, 25.6));
 
-    var app = builder.Build();
+    var app2 = builder.Build();
 
-    app.UseCors(b => b
+    app2.UseCors(b => b
         .WithOrigins("http://localhost:8080")
         .AllowAnyMethod()
         .AllowAnyHeader()
@@ -42,17 +42,17 @@ try
 
     // for hosting the proto actor dashboard behind a reverse proxy on a subpath
     if (builder.Configuration["PathBase"] != null)
-        app.UsePathBase(builder.Configuration["PathBase"]);
+        app2.UsePathBase(builder.Configuration["PathBase"]);
 
-    app.UseHealthChecks("/healthz");
-    app.UseRouting();
-    app.MapHub<EventsHub>("/events");
-    app.MapOrganizationApi();
-    app.MapTrailApi();
-    app.MapProtoActorDashboard();
+    app2.UseHealthChecks("/healthz");
+    app2.UseRouting();
+    app2.MapHub<EventsHub>("/events");
+    app2.MapOrganizationApi();
+    app2.MapTrailApi();
+    app2.MapProtoActorDashboard();
 
 
-    app.Run();
+    app2.Run();
 }
 catch (Exception e)
 {
